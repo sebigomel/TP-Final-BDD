@@ -15,6 +15,9 @@
     <?php
     include 'connection.php';
     $conn = OpenCon();
+    if ($_GET['subject'] != '') {
+        echo $_GET['subject'];
+    }
     $consultaSQL = "SELECT * FROM productos";
     $result = mysqli_query($conn, $consultaSQL);
     CloseCon($conn);
@@ -22,9 +25,9 @@
 
     <nav>
         <div class="nav-wrapper green accent-2">
-            <form>
+            <form action="" method="get">
                 <div class="input-field">
-                    <input id="search" type="search" required>
+                    <input id="search" type="search" required placeholder="Buscar productos">
                     <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                     <i class="material-icons">close</i>
                 </div>
