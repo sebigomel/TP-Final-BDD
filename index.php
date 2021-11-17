@@ -15,21 +15,26 @@
     <?php
     include 'connection.php';
     $conn = OpenCon();
-    if ($_GET['subject'] != '') {
-        echo $_GET['subject'];
+    $inputValue = $_GET['value'];
+    if ($inputValue != '') {
+        $consultaSQL = "SELECT * FROM productos WHERE nombre LIKE " . "'" . $inputValue . "%" . "'";
+        var_dump($consultaSQL);
+    } else {
+        $consultaSQL = "SELECT * FROM productos";
     }
-    $consultaSQL = "SELECT * FROM productos";
     $result = mysqli_query($conn, $consultaSQL);
     CloseCon($conn);
     ?>
 
     <nav>
         <div class="nav-wrapper green accent-2">
-            <form action="" method="get">
+            <form action="" method="get" name="myform">
                 <div class="input-field">
-                    <input id="search" type="search" required placeholder="Buscar productos">
+                    <input id="search" type="search" name="value" required placeholder="Buscar productos" onchange="myform.submit();">
                     <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                    <i class="material-icons">close</i>
+                    <i onclick="<?php $url = strtok($url, "?");
+                                var_dump($url);
+                                echo "<script> window.location.pathname=$url </script>"            ?>" class="material-icons">close</i>
                 </div>
             </form>
         </div>
@@ -37,9 +42,9 @@
     <div class="container row" style="margin-top: 10px;">
         <?php
         foreach ($result as $row) : ?>
-            <div class="card col s3">
+            <div class="card col s10 m5 l3">
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator" src="images/<?php echo $row["url_imagen"] ?>.jpg">
+                    <img height="170" width="200px" class="activator" src="images/<?php echo $row["url_imagen"] ?>.jpg">
                 </div>
                 <div class="card-content">
                     <span class="card-title activator grey-text text-darken-4"><?php echo $row["nombre"] ?><i class="material-icons right">more_vert</i></span>
