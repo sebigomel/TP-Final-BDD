@@ -16,9 +16,11 @@
     include 'connection.php';
     $conn = OpenCon();
     $productId = $_GET['id_producto'];
-    $consultaSQL = "SELECT * FROM reviews INNER JOIN productos ON reviews.id_producto = productos.id;";
+    $consultaSQL = "SELECT * FROM `reviews` WHERE `id_producto` = $productId";
+    $nombreProducto = "SELECT nombre FROM `productos` WHERE id = $productId";
+    $resultadoNombre = mysqli_query($conn, $nombreProducto);
     $result = mysqli_query($conn, $consultaSQL);
-    $reviews = mysqli_fetch_array($result);
+    $reviews = mysqli_fetch_array($resultadoNombre);
     CloseCon($conn);
     ?>
     <nav>
